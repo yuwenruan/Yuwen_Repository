@@ -28,7 +28,7 @@ public static class CustomerDB
         {
             con.Open();
             SqlDataReader dr = cmd.ExecuteReader();
-            if (dr != null)
+            while (dr.Read())
             {
                 cust.CustomerId = (int)dr[0];
                 cust.CustFirstName = (string)dr[1];
@@ -87,7 +87,7 @@ public static class CustomerDB
     }
 
     //Insert  New Customer Function 
-    [DataObjectMethod(DataObjectMethodType.Update)]
+    [DataObjectMethod(DataObjectMethodType.Insert)]
     public static int InsertNewCustomer(Customer NewCustomer)
     {
         SqlConnection con = new SqlConnection(TravelExpertDB.GetConnectionString());
@@ -103,6 +103,7 @@ public static class CustomerDB
             "@CustBusPhone, @CustEmail); SELECT SCOPE_IDENTITY()";
 
         SqlCommand cmd = new SqlCommand(sel, con);
+
         {
 
             cmd.Parameters.AddWithValue("@CustFirstName", NewCustomer.CustFirstName);
@@ -139,4 +140,52 @@ public static class CustomerDB
         }
 
     }
+
+    //method to update customer information
+    public static bool UpdateCustomer(Customer customer)
+    {
+        SqlConnection con = new SqlConnection(TravelExpertDB.GetConnectionString());
+
+        string updateState = "Update Customers SET CustFirstName=@CustFirstName, " +
+        "CustLastName=@CustLastName, CustAddress=@CustAddress, " +
+        "CustCity=@CustCity, CustProv=@CustProv, CustPostal=@CustPostal, " +
+        "CustCountry=@CustCountry, CustHomePhone=@CustHomePhone, " +
+        " CustBusPhone=@CustBusPhone, CustEmail=@CustEmail " +
+            "WHERE CustomerId=@CustomerId" ;
+
+        SqlCommand cmd = new SqlCommand(updateState, con);
+        cmd.Parameters.AddWithValue("@CustFirstName", customer.CustFirstName);
+        cmd.Parameters.AddWithValue("@CustLastName", customer.CustLastName);
+        cmd.Parameters.AddWithValue("@CustAddress", customer.CustAddress);
+        cmd.Parameters.AddWithValue("@CustCity", customer.CustCity);
+        cmd.Parameters.AddWithValue("@CustProv", customer.CustProv);
+        cmd.Parameters.AddWithValue("@CustPostal", customer.CustPostal);
+        cmd.Parameters.AddWithValue("@CustCountry", customer.CustCountry);
+        cmd.Parameters.AddWithValue("@CustHomePhone", customer.CustHomePhone);
+        cmd.Parameters.AddWithValue("@CustBusPhone", customer.CustBusPhone);
+        cmd.Parameters.AddWithValue("@CustEmail", customer.CustEmail);
+
+        cmd.Parameters.AddWithValue("@CustomerId", customer.CustomerId);
+
+            try
+            {
+                con.Open();
+
+                int count = cmd.ExecuteNonQuery();
+                if (count > 0)
+                    return true;
+                else
+                    return false;
+
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+    
 }

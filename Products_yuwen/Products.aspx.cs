@@ -23,15 +23,16 @@ public partial class _Default : System.Web.UI.Page
     {
         if (Session["CustomerId"] == null)
         {
-            Session["CustomerId"] = "104";
+            Response.Redirect("Welcome.aspx");
         }
+        else
+        {
+            int id =(int) Session["CustomerId"];
+            lblName.Text = CustomerDB.GetCustomerName(id);
+            lblTotal.Text = BookingProductDB.GetBookingProductTotal(id).ToString("c");
+            lblPackage.Text = PackageDB.GetTotalMoneyById(id).ToString("c");
 
-        int i = 104;
-
-        lblName.Text = CustomerDB.GetCustomerName(i);
-        //lblTotal.Text = PackageDB.GetTotalMoneyById(i).ToString("c");
-        lblTotal.Text = BookingProductDB.GetBookingProductTotal(i).ToString("c");
-        lblPackage.Text = PackageDB.GetTotalMoneyById(i).ToString("c");
+        }      
 
     }
 
@@ -39,5 +40,10 @@ public partial class _Default : System.Web.UI.Page
     protected void GridView2_SelectedIndexChanged(object sender, EventArgs e)
     {
 
+    }
+    protected void btnLogout_Click(object sender, EventArgs e)
+    {
+        Session.Clear();
+        Response.Redirect("Welcome.aspx");
     }
 }

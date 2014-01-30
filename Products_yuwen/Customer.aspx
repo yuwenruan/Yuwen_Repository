@@ -3,6 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <asp:Button ID="btnLogout" runat="server" CssClass="logout" OnClick="btnLogout_Click" Text="Logout" Width="72px" />
+    <br />
+    <br />
     <table style="border: 1px solid black">
         <tr>
             <td colspan="2"><b>Customer Information</b> </td>
@@ -107,8 +110,10 @@
         <tr>
             <td></td>
             <td>
-                <asp:Button ID="btnEdit" runat="server" Text="Edit" Width="73px" />
+                <asp:Button ID="btnEdit" runat="server" Text="Edit" Width="73px" OnClick="btnEdit_Click" />
+                <asp:Button ID="btnUpdate" runat="server" Text="Update" Width="73px" OnClick="btnUpdate_Click" />
             </td>
+             
         </tr>
         <tr>
             <td colspan="2">

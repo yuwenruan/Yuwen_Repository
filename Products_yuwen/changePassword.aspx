@@ -32,7 +32,7 @@
         </tr>
         <tr>
             <td></td>
-            <td>&nbsp;<asp:Button ID="btnSave" runat="server" Text="Save" Width="70px" />
+            <td>&nbsp;<asp:Button ID="btnSave" runat="server" Text="Save" Width="70px" OnClick="btnSave_Click" />
             </td>
         </tr>
         <tr>

@@ -21,24 +21,34 @@ public static class UserDB
         SqlConnection con = new SqlConnection(TravelExpertDB.GetConnectionString());
 
   
-        string selectState = "SELECT count(UserName) FROM USERS WHERE UserName=@UserName";
+        string selectState = "SELECT count(UserName) FROM Users WHERE UserName=@UserName";
 
 
         SqlCommand cmd = new SqlCommand(selectState, con);
         cmd.Parameters.AddWithValue("@UserName", username);
-
-        con.Open();
-        SqlDataReader dr = cmd.ExecuteReader();
-        while (dr.Read())
+        try
         {
-            count = (int)dr[0];
+            con.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr != null && dr.Read())
+            {
+                count = (int)dr[0];
+            }
+            if (count > 0)
+            {
+                return true;
+            }
+            else
+                return false;
         }
-        if (count > 0)
+        catch (SqlException ex)
         {
-            return true;
+            throw ex;
         }
-        else
-            return false;
+        finally
+        {
+            con.Close();
+        }
 
     }
 
@@ -47,7 +57,7 @@ public static class UserDB
     {
         SqlConnection con=new SqlConnection(TravelExpertDB.GetConnectionString());
         
-        string insertstate = "INSERT INTO USERS (UserName,Password,CustomerId) VALUES(@username,@password,@customerid)";
+        string insertstate = "INSERT INTO Users (UserName,Password,CustomerId) VALUES(@username,@password,@customerid)";
 
         SqlCommand cmd = new SqlCommand(insertstate, con);
 
@@ -117,6 +127,42 @@ public static class UserDB
         }        
     }
 
+    public static User GetUser(int customerid)
+    {
+        SqlConnection con = new SqlConnection(TravelExpertDB.GetConnectionString());
+        User user = new User();
+
+        string strstate = "SELECT Id,UserName,Password,CustomerId FROM Users WHERE CustomerId=@customerid";
+
+        SqlCommand cmd = new SqlCommand(strstate, con);
+
+
+        cmd.Parameters.AddWithValue("@customerid", customerid);
+
+        try
+        {
+            con.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                user.Id = (int)dr[0];
+                user.UserName = dr[1].ToString();
+                user.Password = dr[2].ToString();
+                user.CustomerId = (int)dr[3];
+
+            }
+            return user;
+        }
+        catch (SqlException ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            con.Close();
+        }
+    }
+
     public static int SuccessLog(string username, string password)
     {
         SqlConnection con = new SqlConnection(TravelExpertDB.GetConnectionString());
@@ -156,24 +202,29 @@ public static class UserDB
         }
     }
 
-    public static void UpdatePassword(string Password)
+    public static bool UpdatePassword(User user)
     {
         SqlConnection con = new SqlConnection(TravelExpertDB.GetConnectionString());
 
-        string Upstate = "UPDATE Users SET Password = @Password";
+        string Upstate = "UPDATE Users SET Password = @Password WHERE Id=@id";
 
         SqlCommand cmd = new SqlCommand(Upstate, con);
 
-        string EncryptedPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(Password, "SHA1");
+        string EncryptedPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(user.Password, "SHA1");
         if(EncryptedPassword != null)
 
         cmd.Parameters.AddWithValue("@password", EncryptedPassword);
+        cmd.Parameters.AddWithValue("@id", user.Id);
 
         try
         {
             con.Open();
             
-            cmd.ExecuteNonQuery();
+            int count= cmd.ExecuteNonQuery();
+            if (count > 0)
+                return true;
+            else
+                return false;
 
 
         }

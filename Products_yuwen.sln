@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Products_yuwen", "Products_yuwen\", "{0957988D-AFBE-408D-BDB1-8C18E4CE8E2F}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/Products_yuwen"
+		Debug.AspNetCompiler.PhysicalPath = "Products_yuwen\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Products_yuwen\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/Products_yuwen"
+		Release.AspNetCompiler.PhysicalPath = "Products_yuwen\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Products_yuwen\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "52633"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0957988D-AFBE-408D-BDB1-8C18E4CE8E2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0957988D-AFBE-408D-BDB1-8C18E4CE8E2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

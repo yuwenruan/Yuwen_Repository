@@ -8,7 +8,9 @@
     </p>
     <p>
         Customer:<asp:Label ID="lblName" runat="server" Text="Label"></asp:Label>
+    &nbsp;&nbsp;&nbsp;&nbsp;
     </p>
+    <asp:Button ID="btnLogout" runat="server" OnClick="btnLogout_Click" Text="Logout" />
     <p>
         Total Spend:<asp:Label ID="lblTotal" runat="server" Text="Label"></asp:Label>
     </p>
